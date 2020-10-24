@@ -820,9 +820,11 @@ class TreeBehavior extends Behavior
      */
     public function recover(): void
     {
+        echo PHP_EOL . 'starting recover' . PHP_EOL;
         $this->_table->getConnection()->transactional(function (): void {
             $this->_recoverTree();
         });
+        echo 'finished recover' . PHP_EOL;
     }
 
     /**
@@ -863,14 +865,12 @@ class TreeBehavior extends Behavior
             $fields[$config['level']] = $level;
         }
 
-        $updated = $this->_table->updateAll(
+        echo 'saving - ' . $parentId . PHP_EOL;
+        var_dump($fields);
+        $this->_table->updateAll(
             $fields,
             [$primaryKey => $parentId]
         );
-        if (!$updated) {
-            echo 'Update of parent failed - ' . $parentId . PHP_EOL;
-            var_dump($fields);
-        }
 
         return $counter + 1;
     }
