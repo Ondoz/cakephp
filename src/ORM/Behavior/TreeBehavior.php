@@ -872,6 +872,14 @@ class TreeBehavior extends Behavior
             [$primaryKey => $parentId]
         );
 
+        echo 'found' . PHP_EOL;
+        $updated = $this->_table->query()
+            ->select([$left, $right])
+            ->where([$aliasedPrimaryKey => $parentId])
+            ->disableHydration()
+            ->first();
+        var_dump($updated);
+
         return $counter + 1;
     }
 
