@@ -762,6 +762,13 @@ class TreeBehaviorTest extends TestCase
         $table->updateAll(['lft' => null, 'rght' => null], ['menu' => 'main-menu']);
         $table->recover();
 
+        $debug = $table->find()
+            ->where(['menu' => 'main-menu'])
+            ->disableHydration()
+            ->all();
+        echo PHP_EOL;
+        var_dump($debug);
+
         $expected = [
             ' 1: 2 -  8:Link 8',
             ' 3: 6 -  6:Link 6',

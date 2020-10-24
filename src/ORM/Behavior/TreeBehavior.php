@@ -820,11 +820,9 @@ class TreeBehavior extends Behavior
      */
     public function recover(): void
     {
-        echo PHP_EOL . 'starting recover' . PHP_EOL;
         $this->_table->getConnection()->transactional(function (): void {
             $this->_recoverTree();
         });
-        echo 'finished recover' . PHP_EOL;
     }
 
     /**
@@ -865,20 +863,10 @@ class TreeBehavior extends Behavior
             $fields[$config['level']] = $level;
         }
 
-        echo 'saving - ' . $parentId . PHP_EOL;
-        var_dump($fields);
         $this->_table->updateAll(
             $fields,
             [$primaryKey => $parentId]
         );
-
-        echo 'found' . PHP_EOL;
-        $updated = $this->_table->query()
-            ->select([$left, $right])
-            ->where([$aliasedPrimaryKey => $parentId])
-            ->disableHydration()
-            ->first();
-        var_dump($updated);
 
         return $counter + 1;
     }
