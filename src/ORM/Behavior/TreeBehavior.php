@@ -863,10 +863,14 @@ class TreeBehavior extends Behavior
             $fields[$config['level']] = $level;
         }
 
-        $this->_table->updateAll(
+        $updated = $this->_table->updateAll(
             $fields,
             [$primaryKey => $parentId]
         );
+        if (!$updated) {
+            echo 'Update of parent failed - ' . $parentId . PHP_EOL;
+            var_dump($fields);
+        }
 
         return $counter + 1;
     }

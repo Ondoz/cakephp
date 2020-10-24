@@ -67,7 +67,7 @@ install:
 script:
   - |
       if [[ $TRAVIS_PHP_VERSION == '7.4' ]]; then
-        export CODECOVERAGE=1 && vendor/bin/phpunit --verbose --coverage-clover=clover.xml
+        export CODECOVERAGE=1 && vendor/bin/phpunit --verbose --coverage-clover=clover.xml --filter TreeBehaviorTest
       else
         vendor/bin/phpunit
       fi
